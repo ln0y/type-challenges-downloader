@@ -2,11 +2,24 @@
   "name": "type-challenges-download",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": ["type-challenges"],
+  "keywords": [
+    "type-challenges"
+  ],
+  "license": "MIT",
   "author": "ln0y",
-  "license": "MIT"
+  "main": "index.js",
+  "bin": {
+    "tcd": "./bin/type-challenges-download.js"
+  },
+  "scripts": {
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.26",
+    "vitest": "^0.9.4"
+  },
+  "dependencies": {
+    "lz-string": "^1.4.4",
+    "minimist": "^1.2.6"
+  }
 }

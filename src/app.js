@@ -1,9 +1,22 @@
 const path = require('path')
 const fs = require('fs/promises')
-const lzs = require('./lz-string.js')
-const { github, urlProxy, getMethod } = require('./PromiseRequest')
+const lzs = require('lz-string')
 
-const resolve = (...paths) => path.resolve(__dirname, ...paths)
+const {
+  fileExists,
+  readOrMkdir,
+} = require('./shared/fs.js')
+
+const {
+  urlProxy,
+  getMethod,
+} = require('./request')
+
+const {
+  github,
+} = require('./request/github')
+
+const resolve = (...paths) => path.resolve(process.cwd(), ...paths)
 const sleep = ms => new Promise(r => setTimeout(r, ms))
 
 const DOMAIN = 'https://tsch.js.org'
@@ -28,29 +41,6 @@ async function getQuestions () {
   return getRepoTree(questions.sha)
 }
 
-// transform GitHub repo directories into a tree structure
-// function transfromTree (list) {
-//   const pathMap = new Map()
-
-//   for (let item of list) {
-//     const dirs = item.path.split('/')
-//     let map = pathMap
-//     let parent = null
-//     while (dirs.length) {
-//       const dir = dirs.shift()
-//       if (map.has(dir)) {
-//         parent = map.get(dir)
-//         map = parent.children || new Map()
-//       } else {
-//         map.set(dir, item)
-//         parent && (parent.children = map)
-//       }
-//     }
-//   }
-
-//   return pathMap
-// }
-
 // Classification according to the difficulty of the question
 function classifyDifficulty (questions) {
   const map = new Map()
@@ -61,20 +51,6 @@ function classifyDifficulty (questions) {
     difficultyMap.set(`${Number(sequence)}-${filename}`, Number(sequence))
   }
   return map
-}
-
-function dirExists (dir) {
-  return fs.stat(dir).then(stat => stat.isDirectory()).catch(() => false)
-}
-
-function fileExists (file) {
-  return fs.stat(file).then(stat => stat.isFile()).catch(() => false)
-}
-
-async function readOrMkdir (dir) {
-  const exists = await dirExists(dir)
-  if (exists) return fs.readdir(dir)
-  else return fs.mkdir(dir).then(() => fs.readdir(dir))
 }
 
 function updateTestCaseAndComments (oldFile, newFile) {
@@ -124,9 +100,12 @@ async function getCode (seq) {
   return lzs.decompressFromEncodedURIComponent(code)
 }
 
-!(async function init () {
+async function start (options) {
   const questions = await getQuestions()
-  // const tree = transfromTree(mock.questions)
   const difficulties = classifyDifficulty(questions)
   await writeFile(difficulties)
-}())
+}
+
+module.exports = {
+  start
+}
