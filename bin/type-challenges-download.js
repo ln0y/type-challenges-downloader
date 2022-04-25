@@ -24,3 +24,5 @@ const argv = parseArgs(process.argv.slice(2), {
 // tcd
 
 console.log(argv)
+
+tcd.start(argv)

@@ -1,4 +1,3 @@
-
 function isObject (value) {
   const type = typeof value
   return value !== null && (type === 'object' || type === 'function')
@@ -20,8 +19,10 @@ function merge (source, other, ...rest) {
   return rest.length ? merge(obj, ...rest) : obj
 }
 
+const sleep = ms => new Promise(r => setTimeout(r, ms))
 
 module.exports = {
   isObject,
   merge,
+  sleep,
 }

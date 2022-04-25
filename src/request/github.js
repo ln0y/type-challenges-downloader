@@ -1,4 +1,5 @@
-const { getMethod, postMethod, replaceUrlParams } = require('./index.js')
+const { getMethod, postMethod, replaceUrlParams } = require('./index')
+const { merge } = require('../shared')
 
 const UAHeader = {
   headers: {
@@ -7,21 +8,25 @@ const UAHeader = {
   }
 }
 
+const baseUrl = 'https://api.github.com'
+
 const urlProxy = url => new Proxy(url, {
-  get (target, key, receiver) {
-    return baseUrl + replaceUrlParams(Reflect.get(target, key, receiver))
+  get (...rest) {
+    return baseUrl + replaceUrlParams(Reflect.get(...rest), {
+      owner: 'type-challenges',
+      repo: 'type-challenges',
+    })
   },
 })
-
-const baseUrl = 'https://api.github.com'
-const owner = 'type-challenges'
-const repo = 'type-challenges'
 
 const github = {
   get (url, data, options) {
     url = replaceUrlParams(url, data)
+    const query = new URLSearchParams(data)
+
     const reqURL = new URL(url)
-    reqURL.search = new URLSearchParams(data).toString()
+    reqURL.search = query.toString()
+
     return getMethod(reqURL.toString(), merge(options, UAHeader))
   },
   post (url, data, options) {
@@ -32,4 +37,5 @@ const github = {
 
 module.exports = {
   github,
+  urlProxy,
 }

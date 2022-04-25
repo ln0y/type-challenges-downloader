@@ -5,21 +5,22 @@ const lzs = require('lz-string')
 const {
   fileExists,
   readOrMkdir,
-} = require('./shared/fs.js')
+} = require('./shared/fs')
 
 const {
-  urlProxy,
+  sleep
+} = require('./shared')
+
+const {
   getMethod,
 } = require('./request')
 
 const {
   github,
+  urlProxy,
 } = require('./request/github')
 
 const resolve = (...paths) => path.resolve(process.cwd(), ...paths)
-const sleep = ms => new Promise(r => setTimeout(r, ms))
-
-const DOMAIN = 'https://tsch.js.org'
 
 // https://docs.github.com/cn/rest/reference/git#get-a-tree
 const url = urlProxy({
@@ -58,6 +59,15 @@ function updateTestCaseAndComments (oldFile, newFile) {
   return newFile.replace(reg, oldFile.match(reg)[1])
 }
 
+// parse typescript playground code
+const DOMAIN = 'https://tsch.js.org'
+async function getCode (seq) {
+  const url = `${DOMAIN}/${seq}/play`
+  const localtion = await getMethod(url).catch(console.error)
+  const code = localtion.match(/(?<=#code\/).*/)[0]
+  return lzs.decompressFromEncodedURIComponent(code)
+}
+
 async function writeFile (difficulties) {
   for (const [difficulty, questions] of difficulties) {
     console.log(`----------------${difficulty} start----------------`)
@@ -90,14 +100,6 @@ async function writeFile (difficulties) {
 
     console.log(`----------------${difficulty} finish----------------`)
   }
-}
-
-// parse typescript playground code
-async function getCode (seq) {
-  const url = `${DOMAIN}/${seq}/play`
-  const localtion = await getMethod(url).catch(console.error)
-  const code = localtion.match(/(?<=#code\/).*/)[0]
-  return lzs.decompressFromEncodedURIComponent(code)
 }
 
 async function start (options) {
