@@ -137,7 +137,6 @@ function getDefaults () {
 }
 
 async function start (options) {
-  console.log(options);
   options = merge(getDefaults(), options)
   const questions = await getQuestions()
   await writeTsConfig(options)
