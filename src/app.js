@@ -97,7 +97,7 @@ async function writeQuestions (questions, path, options) {
     const code = await getCode(seq)
     await (exists ? updateFile : createFile)(filePath, code)
 
-    await sleep(options.sleep < 100 ? 100 : options.sleep)
+    await sleep(options.wait < 100 ? 100 : options.wait)
   }
 }
 
@@ -124,7 +124,7 @@ function getDefaults () {
     path: './',
     difficulty: [],
     update: false,
-    sleep: 500,
+    wait: 500,
   }
 }
 

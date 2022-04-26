@@ -8,9 +8,8 @@ const argv = parseArgs(process.argv.slice(2), {
     'path': 'p',
     'difficulty': 'd',
     'update': 'u',
-    'sleep': 's',
+    'wait': 'w',
   },
-  boolean: ['update'],
   unknown: (arg) => {
     console.error(`Unknown argument: ${arg}`)
     process.exit(1)
@@ -20,9 +19,9 @@ const argv = parseArgs(process.argv.slice(2), {
 // tcd --path ./exercise
 // tcd -p ./exercise
 // tcd --difficulty easy
-// tcd -d easy
-// tcd --sleep 100
-// tcd -s 100
+// tcd -d easy -d hard
+// tcd --wait 100
+// tcd -w 100
 // tcd --update
 // tcd -u
 // tcd
