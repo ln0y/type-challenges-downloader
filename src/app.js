@@ -76,8 +76,8 @@ async function updateFile (filePath, code) {
   await fs.writeFile(filePath, updateTestCaseAndComments(oldFileContent, code))
 }
 
-async function createFile (filePath, code) {
-  await fs.writeFile(filePath, code)
+async function createFile (filePath, content) {
+  await fs.writeFile(filePath, content)
 }
 
 async function writeQuestions (questions, path, options) {
@@ -99,6 +99,13 @@ async function writeQuestions (questions, path, options) {
 
     await sleep(options.wait < 100 ? 100 : options.wait)
   }
+}
+
+async function writeTsConfig (options) {
+  if (!options.config) return
+  const rootPath = resolve(options.path)
+  const config = await fs.readFile(resolve(__dirname, 'tsconfig.json'), 'utf-8')
+  await createFile(resolve(rootPath, 'tsconfig.json'), config)
 }
 
 async function writeFile (difficulties, options) {
@@ -125,12 +132,15 @@ function getDefaults () {
     difficulty: [],
     update: false,
     wait: 500,
+    config: true,
   }
 }
 
 async function start (options) {
+  console.log(options);
   options = merge(getDefaults(), options)
   const questions = await getQuestions()
+  await writeTsConfig(options)
   const difficulties = classifyDifficulty(questions)
   await writeFile(filterDifficulty(difficulties, options), options)
 }
