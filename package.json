@@ -17,6 +17,10 @@
   "bin": {
     "tcd": "./bin/type-challenges-downloader.js"
   },
+  "files": [
+    "bin",
+    "src"
+  ],
   "scripts": {
     "test": "vitest"
   },
