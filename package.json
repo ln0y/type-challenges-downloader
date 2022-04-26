@@ -1,5 +1,5 @@
 {
-  "name": "type-challenges-download",
+  "name": "type-challenges-downloader",
   "version": "0.1.0",
   "description": "A download type-challenges script",
   "keywords": [
@@ -10,12 +10,12 @@
     "type-system",
     "challenges"
   ],
-  "repository": "https://github.com/ln0y/type-challenges-download",
+  "repository": "https://github.com/ln0y/type-challenges-downloader",
   "license": "MIT",
   "author": "ln0y",
   "main": "src/app.js",
   "bin": {
-    "tcd": "./bin/type-challenges-download.js"
+    "tcd": "./bin/type-challenges-downloader.js"
   },
   "scripts": {
     "test": "vitest"

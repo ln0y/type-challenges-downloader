@@ -1,11 +1,11 @@
-# type-challenges-download
+# type-challenges-downloader
 
 目前 [type-challenges](https://github.com/type-challenges/type-challenges) 项目中的题目只支持在 typescript playground 中调试，无法批量下载到本地。本项目可以将 type-challenges 中的题目批量下载到本地，支持在保留你原本的代码的同时更新题目中测试用例及说明。
 
 # 安装
 
 ```
-npm install type-challenges-download
+npm install type-challenges-downloader
 ```
 
 # 使用
