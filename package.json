@@ -1,25 +1,34 @@
 {
   "name": "type-challenges-download",
   "version": "0.1.0",
-  "description": "",
+  "description": "A download type-challenges script",
   "keywords": [
-    "type-challenges"
+    "type-challenges",
+    "typescript",
+    "download",
+    "type",
+    "type-system",
+    "challenges"
   ],
+  "repository": "https://github.com/ln0y/type-challenges-download",
   "license": "MIT",
   "author": "ln0y",
-  "main": "index.js",
+  "main": "src/app.js",
   "bin": {
     "tcd": "./bin/type-challenges-download.js"
   },
   "scripts": {
     "test": "vitest"
   },
-  "devDependencies": {
-    "@types/node": "^17.0.26",
-    "vitest": "^0.9.4"
-  },
   "dependencies": {
     "lz-string": "^1.4.4",
     "minimist": "^1.2.6"
+  },
+  "peerDependencies": {
+    "@type-challenges/utils": "^0.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.26",
+    "vitest": "^0.9.4"
   }
 }
