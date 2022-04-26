@@ -59,13 +59,13 @@ tcd [options]
 
 ### 示例
 
-- 下载到exercise目录，只下载easy和hard题目
+- 下载到 exercise 目录，只下载 easy 和 hard 题目
 
 ```
 tcd -p ./exercise -d easy -d hard
 ```
 
-- 下载并更新exercise目录下，easy的题目
+- 下载并更新 exercise 目录下， easy 的题目
 
 ```
 tcd -u -p ./exercise -d easy

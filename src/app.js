@@ -58,7 +58,7 @@ function classifyDifficulty (questions) {
 
 // Update comments and test cases for old files
 function updateTestCaseAndComments (oldFile, newFile) {
-  const reg = /(?<=\/\*[\s_]*(?:Your Code Here|你的代码)[\s_]*\*\/\n)((.*\n)*?)(?=\/\*[\s_]*(?:Test Cases|测试用例)[\s_]*\*\/)/
+  const reg = /(?<=\/\*[\s_]*(?:Your Code Here|你的代码|ここにコードを記入|여기에 코드 입력)[\s_]*\*\/\n)((.*\n)*?)(?=\/\*[\s_]*(?:Test Cases|测试用例|テストケース|테스트 케이스)[\s_]*\*\/)/
   return newFile.replace(reg, oldFile.match(reg)[1])
 }
 
